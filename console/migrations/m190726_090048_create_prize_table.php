@@ -3,18 +3,18 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%genres}}`.
+ * Handles the creation of table `{{%prize}}`.
  */
-class m190725_133154_create_genres_table extends Migration
+class m190726_090048_create_prize_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%genres}}', [
+        $this->createTable('{{%prize}}', [
             'id' => $this->primaryKey(),
-            'genre' => $this->string(64)->notNull(),
+            'prize' => $this->string(64)->notNull(),
         ]);
     }
 
@@ -23,6 +23,6 @@ class m190725_133154_create_genres_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%genres}}');
+        $this->dropTable('{{%prize}}');
     }
 }

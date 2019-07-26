@@ -3,22 +3,22 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%comments}}`.
+ * Handles the creation of table `{{%comment}}`.
  * Has foreign keys to the tables:
  *
- * - `{{%films}}`
+ * - `{{%film}}`
  * - `{{%user}}`
  * - `{{%user}}`
- * - `{{%comments}}`
+ * - `{{%comment}}`
  */
-class m190725_142153_create_comments_table extends Migration
+class m190726_090124_create_comment_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%comments}}', [
+        $this->createTable('{{%comment}}', [
             'id' => $this->primaryKey(),
             'comment' => $this->text()->notNull(),
             'film_id' => $this->integer(),
@@ -31,32 +31,32 @@ class m190725_142153_create_comments_table extends Migration
 
         // creates index for column `film_id`
         $this->createIndex(
-            '{{%idx-comments-film_id}}',
-            '{{%comments}}',
+            '{{%idx-comment-film_id}}',
+            '{{%comment}}',
             'film_id'
         );
 
-        // add foreign key for table `{{%films}}`
+        // add foreign key for table `{{%film}}`
         $this->addForeignKey(
-            '{{%fk-comments-film_id}}',
-            '{{%comments}}',
+            '{{%fk-comment-film_id}}',
+            '{{%comment}}',
             'film_id',
-            '{{%films}}',
+            '{{%film}}',
             'id',
             'CASCADE'
         );
 
         // creates index for column `created_by`
         $this->createIndex(
-            '{{%idx-comments-created_by}}',
-            '{{%comments}}',
+            '{{%idx-comment-created_by}}',
+            '{{%comment}}',
             'created_by'
         );
 
         // add foreign key for table `{{%user}}`
         $this->addForeignKey(
-            '{{%fk-comments-created_by}}',
-            '{{%comments}}',
+            '{{%fk-comment-created_by}}',
+            '{{%comment}}',
             'created_by',
             '{{%user}}',
             'id',
@@ -65,15 +65,15 @@ class m190725_142153_create_comments_table extends Migration
 
         // creates index for column `updated_by`
         $this->createIndex(
-            '{{%idx-comments-updated_by}}',
-            '{{%comments}}',
+            '{{%idx-comment-updated_by}}',
+            '{{%comment}}',
             'updated_by'
         );
 
         // add foreign key for table `{{%user}}`
         $this->addForeignKey(
-            '{{%fk-comments-updated_by}}',
-            '{{%comments}}',
+            '{{%fk-comment-updated_by}}',
+            '{{%comment}}',
             'updated_by',
             '{{%user}}',
             'id',
@@ -82,17 +82,17 @@ class m190725_142153_create_comments_table extends Migration
 
         // creates index for column `parrent_id`
         $this->createIndex(
-            '{{%idx-comments-parrent_id}}',
-            '{{%comments}}',
+            '{{%idx-comment-parrent_id}}',
+            '{{%comment}}',
             'parrent_id'
         );
 
-        // add foreign key for table `{{%comments}}`
+        // add foreign key for table `{{%comment}}`
         $this->addForeignKey(
-            '{{%fk-comments-parrent_id}}',
-            '{{%comments}}',
+            '{{%fk-comment-parrent_id}}',
+            '{{%comment}}',
             'parrent_id',
-            '{{%comments}}',
+            '{{%comment}}',
             'id',
             'CASCADE'
         );
@@ -103,54 +103,54 @@ class m190725_142153_create_comments_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%films}}`
+        // drops foreign key for table `{{%film}}`
         $this->dropForeignKey(
-            '{{%fk-comments-film_id}}',
-            '{{%comments}}'
+            '{{%fk-comment-film_id}}',
+            '{{%comment}}'
         );
 
         // drops index for column `film_id`
         $this->dropIndex(
-            '{{%idx-comments-film_id}}',
-            '{{%comments}}'
+            '{{%idx-comment-film_id}}',
+            '{{%comment}}'
         );
 
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
-            '{{%fk-comments-created_by}}',
-            '{{%comments}}'
+            '{{%fk-comment-created_by}}',
+            '{{%comment}}'
         );
 
         // drops index for column `created_by`
         $this->dropIndex(
-            '{{%idx-comments-created_by}}',
-            '{{%comments}}'
+            '{{%idx-comment-created_by}}',
+            '{{%comment}}'
         );
 
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
-            '{{%fk-comments-updated_by}}',
-            '{{%comments}}'
+            '{{%fk-comment-updated_by}}',
+            '{{%comment}}'
         );
 
         // drops index for column `updated_by`
         $this->dropIndex(
-            '{{%idx-comments-updated_by}}',
-            '{{%comments}}'
+            '{{%idx-comment-updated_by}}',
+            '{{%comment}}'
         );
 
-        // drops foreign key for table `{{%comments}}`
+        // drops foreign key for table `{{%comment}}`
         $this->dropForeignKey(
-            '{{%fk-comments-parrent_id}}',
-            '{{%comments}}'
+            '{{%fk-comment-parrent_id}}',
+            '{{%comment}}'
         );
 
         // drops index for column `parrent_id`
         $this->dropIndex(
-            '{{%idx-comments-parrent_id}}',
-            '{{%comments}}'
+            '{{%idx-comment-parrent_id}}',
+            '{{%comment}}'
         );
 
-        $this->dropTable('{{%comments}}');
+        $this->dropTable('{{%comment}}');
     }
 }

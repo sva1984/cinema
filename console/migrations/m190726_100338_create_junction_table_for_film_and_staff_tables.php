@@ -3,53 +3,53 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%staff_mtm_films}}`.
+ * Handles the creation of table `{{%film_staff}}`.
  * Has foreign keys to the tables:
  *
- * - `{{%films}}`
+ * - `{{%film}}`
  * - `{{%staff}}`
  */
-class m190725_133002_create_staff_mtm_films_table extends Migration
+class m190726_100338_create_junction_table_for_film_and_staff_tables extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%staff_mtm_films}}', [
-            'id' => $this->primaryKey(),
+        $this->createTable('{{%film_staff}}', [
             'film_id' => $this->integer(),
             'staff_id' => $this->integer(),
+            'PRIMARY KEY(film_id, staff_id)',
         ]);
 
         // creates index for column `film_id`
         $this->createIndex(
-            '{{%idx-staff_mtm_films-film_id}}',
-            '{{%staff_mtm_films}}',
+            '{{%idx-film_staff-film_id}}',
+            '{{%film_staff}}',
             'film_id'
         );
 
-        // add foreign key for table `{{%films}}`
+        // add foreign key for table `{{%film}}`
         $this->addForeignKey(
-            '{{%fk-staff_mtm_films-film_id}}',
-            '{{%staff_mtm_films}}',
+            '{{%fk-film_staff-film_id}}',
+            '{{%film_staff}}',
             'film_id',
-            '{{%films}}',
+            '{{%film}}',
             'id',
             'CASCADE'
         );
 
         // creates index for column `staff_id`
         $this->createIndex(
-            '{{%idx-staff_mtm_films-staff_id}}',
-            '{{%staff_mtm_films}}',
+            '{{%idx-film_staff-staff_id}}',
+            '{{%film_staff}}',
             'staff_id'
         );
 
         // add foreign key for table `{{%staff}}`
         $this->addForeignKey(
-            '{{%fk-staff_mtm_films-staff_id}}',
-            '{{%staff_mtm_films}}',
+            '{{%fk-film_staff-staff_id}}',
+            '{{%film_staff}}',
             'staff_id',
             '{{%staff}}',
             'id',
@@ -62,30 +62,30 @@ class m190725_133002_create_staff_mtm_films_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%films}}`
+        // drops foreign key for table `{{%film}}`
         $this->dropForeignKey(
-            '{{%fk-staff_mtm_films-film_id}}',
-            '{{%staff_mtm_films}}'
+            '{{%fk-film_staff-film_id}}',
+            '{{%film_staff}}'
         );
 
         // drops index for column `film_id`
         $this->dropIndex(
-            '{{%idx-staff_mtm_films-film_id}}',
-            '{{%staff_mtm_films}}'
+            '{{%idx-film_staff-film_id}}',
+            '{{%film_staff}}'
         );
 
         // drops foreign key for table `{{%staff}}`
         $this->dropForeignKey(
-            '{{%fk-staff_mtm_films-staff_id}}',
-            '{{%staff_mtm_films}}'
+            '{{%fk-film_staff-staff_id}}',
+            '{{%film_staff}}'
         );
 
         // drops index for column `staff_id`
         $this->dropIndex(
-            '{{%idx-staff_mtm_films-staff_id}}',
-            '{{%staff_mtm_films}}'
+            '{{%idx-film_staff-staff_id}}',
+            '{{%film_staff}}'
         );
 
-        $this->dropTable('{{%staff_mtm_films}}');
+        $this->dropTable('{{%film_staff}}');
     }
 }

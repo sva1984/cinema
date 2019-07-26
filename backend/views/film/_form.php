@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Films */
+/* @var $model common\models\Film */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="films-form">
+<div class="film-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -25,6 +25,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'raiting')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'raiting_mpaa')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'img_url')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'video_url')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

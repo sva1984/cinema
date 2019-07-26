@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Films;
-use common\models\FilmsSearch;
+use common\models\Film;
+use common\models\FilmSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FilmsController implements the CRUD actions for Films model.
+ * FilmController implements the CRUD actions for Film model.
  */
-class FilmsController extends Controller
+class FilmController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class FilmsController extends Controller
     }
 
     /**
-     * Lists all Films models.
+     * Lists all Film models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new FilmsSearch();
+        $searchModel = new FilmSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class FilmsController extends Controller
     }
 
     /**
-     * Displays a single Films model.
+     * Displays a single Film model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class FilmsController extends Controller
     }
 
     /**
-     * Creates a new Films model.
+     * Creates a new Film model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Films();
+        $model = new Film();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class FilmsController extends Controller
     }
 
     /**
-     * Updates an existing Films model.
+     * Updates an existing Film model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class FilmsController extends Controller
     }
 
     /**
-     * Deletes an existing Films model.
+     * Deletes an existing Film model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class FilmsController extends Controller
     }
 
     /**
-     * Finds the Films model based on its primary key value.
+     * Finds the Film model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Films the loaded model
+     * @return Film the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Films::findOne($id)) !== null) {
+        if (($model = Film::findOne($id)) !== null) {
             return $model;
         }
 

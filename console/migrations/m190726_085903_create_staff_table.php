@@ -6,9 +6,9 @@ use yii\db\Migration;
  * Handles the creation of table `{{%staff}}`.
  * Has foreign keys to the tables:
  *
- * - `{{%countries}}`
+ * - `{{%country}}`
  */
-class m190725_132130_create_staff_table extends Migration
+class m190726_085903_create_staff_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -23,6 +23,7 @@ class m190725_132130_create_staff_table extends Migration
             'hieght' => $this->integer(),
             'profession' => $this->boolean(),
             'country_id' => $this->integer(),
+            'img_url' => $this->string(64)->notNull(),
         ]);
 
         // creates index for column `country_id`
@@ -32,12 +33,12 @@ class m190725_132130_create_staff_table extends Migration
             'country_id'
         );
 
-        // add foreign key for table `{{%countries}}`
+        // add foreign key for table `{{%country}}`
         $this->addForeignKey(
             '{{%fk-staff-country_id}}',
             '{{%staff}}',
             'country_id',
-            '{{%countries}}',
+            '{{%country}}',
             'id',
             'CASCADE'
         );
@@ -48,7 +49,7 @@ class m190725_132130_create_staff_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%countries}}`
+        // drops foreign key for table `{{%country}}`
         $this->dropForeignKey(
             '{{%fk-staff-country_id}}',
             '{{%staff}}'

@@ -3,14 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Films */
+/* @var $model common\models\Film */
 
-$this->title = 'Update Films: ' . $model->title;
+$this->title = 'Create Film';
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="films-update">
+<div class="film-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

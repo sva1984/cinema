@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Films */
+/* @var $model common\models\Film */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="films-view">
+<div class="film-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -37,6 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'country_id',
             'raiting',
             'raiting_mpaa',
+            'img_url:url',
+            'video_url:url',
         ],
     ]) ?>
 

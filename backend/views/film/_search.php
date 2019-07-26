@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\FilmsSearch */
+/* @var $model common\models\FilmSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="films-search">
+<div class="film-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -30,6 +30,10 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'raiting') ?>
 
     <?php // echo $form->field($model, 'raiting_mpaa') ?>
+
+    <?php // echo $form->field($model, 'img_url') ?>
+
+    <?php // echo $form->field($model, 'video_url') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

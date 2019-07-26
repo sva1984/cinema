@@ -4,12 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Films;
+use common\models\Film;
 
 /**
- * FilmsSearch represents the model behind the search form of `common\models\Films`.
+ * FilmSearch represents the model behind the search form of `common\models\Film`.
  */
-class FilmsSearch extends Films
+class FilmSearch extends Film
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class FilmsSearch extends Films
     {
         return [
             [['id', 'year', 'duration', 'country_id'], 'integer'],
-            [['title', 'description', 'raiting_mpaa'], 'safe'],
+            [['title', 'description', 'raiting_mpaa', 'img_url', 'video_url'], 'safe'],
             [['raiting'], 'number'],
         ];
     }
@@ -41,7 +41,7 @@ class FilmsSearch extends Films
      */
     public function search($params)
     {
-        $query = Films::find();
+        $query = Film::find();
 
         // add conditions that should always apply here
 
@@ -68,7 +68,9 @@ class FilmsSearch extends Films
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'raiting_mpaa', $this->raiting_mpaa]);
+            ->andFilterWhere(['like', 'raiting_mpaa', $this->raiting_mpaa])
+            ->andFilterWhere(['like', 'img_url', $this->img_url])
+            ->andFilterWhere(['like', 'video_url', $this->video_url]);
 
         return $dataProvider;
     }
