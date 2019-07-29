@@ -6,6 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Film */
 
+
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             'year',
             'duration',
-            'country_id',
+            ['attribute' => 'country_id', 'value' => function($model){return $model->country->country;}],
             'raiting',
             'raiting_mpaa',
             'img_url:url',

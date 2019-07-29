@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
         'columns' => [
             [//Промо
                 'label' => 'Промо',
+                'options' => ['style' => 'width: 8%; max-width: 9%;'],
                 'format' => 'raw',
                 'value' => function($data){
                     return Html::img("$data->img_url",[
@@ -42,11 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [//ссылка на название
                 'label' => 'Название',
                 'format' => 'raw',
+                'options' => ['style' => 'width: 15%; max-width: 65px;'],
                 'value' => function(Film $data){
                     return Html::a(
                         $data->title,
                         "view?id=$data->id",
-                        [
+
+                        [ //открытие ссылки в новом окне
                             'title' =>  $data->title,
                             'target' => '_blank'
                         ]
@@ -58,18 +60,23 @@ $this->params['breadcrumbs'][] = $this->title;
             [//Отображение страны
                 'label' => 'Страна',
                 'format' => 'raw',
-                'value' => function(Film $data){
-                    return $data->country->country;
-                }
+                'value' => 'countryName',
+
             ],
             [//Жанр
                 'label' => 'Жанр',
                 'format' => 'raw',
                 'value' => function(Film $data){
+                    $strGenre='';
                      foreach($data->genres as $genre)
                     {
-                    return $genre->genre;
+                        $strGenre .= Html::a(
+                            $genre->genre,
+                            "view?id=$genre->id").', ';
+
+                    //$strGenre .= $genre->genre.', ';
                     };
+                    return $strGenre;
                 }
             ],
 //            'duration',

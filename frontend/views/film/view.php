@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="film-view">
 
+
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
@@ -29,17 +30,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'title',
             'description:ntext',
             'year',
             'duration',
-            'country_id',
             'raiting',
+            [
+                'label' => 'Рейтинг',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    //$bar = "Html::tag(\'div\', ' ', [\'class\' => [\'progress\']])" . "Html::tag('div', ' ', ['class' => ['progress-bar'], 'style'=>['width:80%']])";
+                    $bar =intval($model->raiting*20);
+
+                   // return  '<div class="progress">' . '<div class="progress-bar" style="width:'.$bar.'%">';
+                    return '<div class="star-ratings-sprite"><span style="width:52%" class="star-ratings-sprite-rating"></span></div>';
+                }
+            ],
             'raiting_mpaa',
-            'img_url:url',
-            'video_url:url',
+            'countryName'
         ],
     ]) ?>
 
-</div>
+    <div class="progress">
+        <div class="progress-bar" style="width:80%">
+
+            $options = ['class' => ['progress']];
+            echo Html::tag('div', " ", ['class' => ['progress']]);
+            echo Html::tag('div', " ", ['class' => ['progress-bar'], 'style'=>['width:80%']]);
+
+        </div>

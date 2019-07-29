@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'duration')->textInput() ?>
 
-    <?= $form->field($model, 'country_id')->textInput() ?>
+    <?= $form->field($model, 'country_id')->dropDownList(yii\helpers\ArrayHelper::map(common\models\Country::find()->all(),'id', 'country')) ?>
 
     <?= $form->field($model, 'raiting')->textInput(['maxlength' => true]) ?>
 

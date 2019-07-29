@@ -93,6 +93,11 @@ class Film extends \yii\db\ActiveRecord
         return $this->hasOne(Country::className(), ['id' => 'country_id']);
     }
 
+    public function getCountryName()
+    {//защита если удалят страну из справочника
+        return isset($this->country)?$this->country->country:'Страна на задана';
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
