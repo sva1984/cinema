@@ -5,11 +5,12 @@ use yii\grid\GridView;
 use common\models\film;
 use common\models\country;
 use common\models\filmGenre;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\FilmSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Films';
+$this->title = ' C I N E M A ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="film-index">
@@ -36,9 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
 //
 //            ['class' => 'yii\grid\SerialColumn'], //нумерация строк
 
-//            'id',
-//            'title',
-//            'description:ntext',
             [//ссылка на название
                 'label' => 'Название',
                 'format' => 'raw',
