@@ -48,7 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'description:ntext',
                     'year',
                     'duration',
-                    'raiting',
                     [ //Самодельный прогресс бар
                         'label' => 'Рейтинг',
                         'format' => 'raw',
@@ -57,23 +56,16 @@ $this->params['breadcrumbs'][] = $this->title;
                            $starPart = - floor((1 - ($model->raiting - $star))*48);
                            $printStar='';
                             $printStar .=' <div class="star">';
-
                            for($i=0; $i<$star; $i++)
                            {//Отрисовка целых звёзд
                                $printStar .= "<img src='..\images\starfull.jpg'/>";
-
                            }
                             $printStar .= '</div>';
                            if ($star<5) {
-//
                                $printStar .= '<p class="crop"><a href="#" ><img src="..\images\starfull.jpg" style="margin:0px ';
                                $printStar .= "$starPart";
                                $printStar .= 'px 0px 0px" alt="css template" /></a></p>';
                            }
-
-//
-
-//                            return '<p class="crop"><a href="#" ><img src="..\images\starfull.jpg" style="margin:0px -24px 0px 0px" alt="css template" /></a></p>';
                             return $printStar;
 
                         }

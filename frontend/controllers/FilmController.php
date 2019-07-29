@@ -2,18 +2,36 @@
 
 namespace frontend\controllers;
 
+use common\services\ArticalsService;
+use common\services\CommentService;
+use common\services\UserService;
+use frontend\services\FilmConrolService;
 use Yii;
 use common\models\Film;
 use common\models\FilmSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use frontend\service\FilmControlService;
 
 /**
  * FilmController implements the CRUD actions for Film model.
  */
 class FilmController extends Controller
 {
+
+//    protected $filmContlolService;
+//
+//    public function __construct($id, $module,
+//                               FilmConrolService $filmContlolService, $config = [])
+//    {
+//        parent::__construct($id, $module, $config);
+//        $this->filmContlolService = $filmContlolService;
+//    }
+
+
+
+
     /**
      * {@inheritdoc}
      */
