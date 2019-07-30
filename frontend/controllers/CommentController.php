@@ -2,39 +2,18 @@
 
 namespace frontend\controllers;
 
-use common\models\Comment;
-use common\models\User;
-use common\services\ArticalsService;
-use common\services\CommentService;
-use common\services\UserService;
-use frontend\services\FilmConrolService;
 use Yii;
-use common\models\Film;
-use common\models\FilmSearch;
-use yii\helpers\Url;
+use common\models\Comment;
+use common\models\CommentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use frontend\service\FilmControlService;
 
 /**
- * FilmController implements the CRUD actions for Film model.
+ * CommentController implements the CRUD actions for Comment model.
  */
-class FilmController extends Controller
+class CommentController extends Controller
 {
-
-//    protected $filmContlolService;
-//
-//    public function __construct($id, $module,
-//                               FilmConrolService $filmContlolService, $config = [])
-//    {
-//        parent::__construct($id, $module, $config);
-//        $this->filmContlolService = $filmContlolService;
-//    }
-
-
-
-
     /**
      * {@inheritdoc}
      */
@@ -51,12 +30,12 @@ class FilmController extends Controller
     }
 
     /**
-     * Lists all Film models.
+     * Lists all Comment models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new FilmSearch();
+        $searchModel = new CommentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -66,40 +45,26 @@ class FilmController extends Controller
     }
 
     /**
-     * Displays a single Film model.
+     * Displays a single Comment model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $commentModel = new Comment();
-        $userModel = new User();
-        if ($commentModel->load(Yii::$app->request->post())) {
-            $commentModel->film_id = $id;
-            if (!$commentModel->save())
-            {
-                die(print_r($commentModel->errors));
-            }
-            Yii::$app->session->setFlash('success', 'comment added');
-        }
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'commentModel' => $commentModel,
-            'userModel' => $userModel
-
         ]);
     }
 
     /**
-     * Creates a new Film model.
+     * Creates a new Comment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Film();
+        $model = new Comment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -111,7 +76,7 @@ class FilmController extends Controller
     }
 
     /**
-     * Updates an existing Film model.
+     * Updates an existing Comment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -131,7 +96,7 @@ class FilmController extends Controller
     }
 
     /**
-     * Deletes an existing Film model.
+     * Deletes an existing Comment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -145,48 +110,18 @@ class FilmController extends Controller
     }
 
     /**
-     * Finds the Film model based on its primary key value.
+     * Finds the Comment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Film the loaded model
+     * @return Comment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Film::findOne($id)) !== null) {
+        if (($model = Comment::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    /**
-     * @param $id
-     * @param $slug
-     * @return string
-     * @throws NotFoundHttpException
-     */
-    public function actionFilialComment($id)
-    {
-        $filialComment = new Comment();
-        $filmModel = new Film();
-        if ($filialComment->load(Yii::$app->request->post())) {
-            $filialComment->film_id = $filmModel->id;
-            $filialComment->parrent_id = $id;
-            Yii::$app->session->setFlash('success', 'comment added');
-            if (!$filialComment->save()) {
-                die(print_r($filialComment->errors));
-            }
-
-            return $this->redirect(Url::to(['film/view', 'id' => $id]));
-
-        }
-
-        return $this->render('_formparrent', [
-            'filialComment' => $filialComment,
-            'parentCommentId' => $id,
-            'model' => $filmModel,
-
-        ]);
     }
 }

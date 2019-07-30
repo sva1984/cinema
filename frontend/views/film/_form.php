@@ -12,28 +12,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'year')->textInput() ?>
-
-    <?= $form->field($model, 'duration')->textInput() ?>
-
-    <?= $form->field($model, 'country_id')->textInput() ?>
-
-    <?= $form->field($model, 'raiting')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'raiting_mpaa')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'img_url')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'video_url')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'comment')->textarea(['rows' => 3]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

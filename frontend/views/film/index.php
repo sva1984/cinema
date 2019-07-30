@@ -1,5 +1,6 @@
 <?php
 
+use frontend\components\ProgressBar;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\film;
@@ -77,12 +78,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $strGenre;
                 }
             ],
-//            'duration',
-            //'country_id',
             'raiting',
-            //'raiting_mpaa',
-//            'img_url:image',
-//            'video_url:url',
+//            [ //Рэйтинг
+//                'label' => 'Рейтинг',
+//                'format' => 'raw',
+//                'value' =>  ProgressBar::widget(['model' => $data]),
+//            ],
 
 //            ['class' => 'yii\grid\ActionColumn'],
         ],

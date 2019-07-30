@@ -9,9 +9,9 @@ class FilmConrolRepository
 {
     protected $filmConrolModel;
 
-    public function __construct(Articals $$filmConrolModel)
+    public function __construct(Film $filmConrolModel)
     {
-        $this->film = $articalsModel;
+        $this->filmConrolModel = $filmConrolModel;
     }
 
 }

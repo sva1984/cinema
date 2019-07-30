@@ -2,19 +2,25 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Comment;
 use frontend\assets\AppAsset;
 use frontend\assets\Cinema;
+use frontend\components\ProgressBar;
+
 AppAsset::register($this);
 Cinema::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Film */
+/* @var $commentModel common\models\Comment */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+
+
 
 <div class="container">
     <div class="row">
@@ -30,46 +36,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <h1><?= Html::encode($this->title) ?></h1>
 
-            <p>
-                <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => 'Are you sure you want to delete this item?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </p>
-
-            <?= DetailView::widget([
+           <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
                     'title',
                     'description:ntext',
                     'year',
                     'duration',
-                    [ //Самодельный прогресс бар
+                    [ //Рэйтинг
                         'label' => 'Рейтинг',
                         'format' => 'raw',
-                        'value' => function ($model) {
-                           $star = floor($model->raiting);
-                           $starPart = - floor((1 - ($model->raiting - $star))*48);
-                           $printStar='';
-                            $printStar .=' <div class="star">';
-                           for($i=0; $i<$star; $i++)
-                           {//Отрисовка целых звёзд
-                               $printStar .= "<img src='..\images\starfull.jpg'/>";
-                           }
-                            $printStar .= '</div>';
-                           if ($star<5) {
-                               $printStar .= '<p class="crop"><a href="#" ><img src="..\images\starfull.jpg" style="margin:0px ';
-                               $printStar .= "$starPart";
-                               $printStar .= 'px 0px 0px" alt="css template" /></a></p>';
-                           }
-                            return $printStar;
-
-                        }
-                    ],
+                        'value' => ProgressBar::widget(['model' => $model]),
+                     ],
                     'raiting_mpaa',
                     'countryName'
                 ],
@@ -78,4 +56,74 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
     </div>
+    <?php function printComment($item, $model, $n)
+    {
+    ?>
+        <li style="margin-left: <?php $margin = 40 * $n;
+        echo "$margin";
+        //        echo '100';
+        //    else echo '40';
+        ?>px">
+           <b><?= Html::encode($item->createdBy->username); ?></b>
+
+            <i>| <?= Html::encode($item->getTimeCreate()); ?></i>
+
+            <?= Html::a('Add comment', ['film/filial-comment?id=' . $item->id],
+                ['class' => 'btn btn-primary']) ?>
+            <br>
+            <p class="commentText">
+
+                <?= Html::encode($item->comment); ?>
+
+
+            </p>
+            <br>
+            <hr>
+        </li>
+    <?php } ?>
 </div>
+
+
+    <?=
+    $this->render('_form', [
+        'model' => $commentModel,
+    ]) ?>
+
+<?php
+/** Comments $comment*/
+/**
+ * @param $model
+ * @param $parrentId
+ * @param $level
+ * @return mixed
+ *
+ */
+function tree($model, $parrentId, $level) //рекурсивная функция
+{
+    $level += 1;
+    foreach ($model->comments as $childcomment) {
+
+        if ($parrentId == $childcomment->parrent_id)
+        {
+
+            printComment($childcomment, $model, $level);
+            $parrentCommentIdChild = $childcomment->id;
+            tree($model, $parrentCommentIdChild, $level);
+        }
+
+    }
+    $level -=1;
+}
+
+foreach ($model->comments as $comment) { ?>
+    <?php if ($comment->parrent_id == null) //определяю родительский комментарий
+    {
+
+        $level = 1;
+        printComment($comment, $model, $level); //печатаю родительский коммент
+        $parrentId = $comment->id;
+        tree($model, $parrentId, $level);
+
+    }
+}
+?>
