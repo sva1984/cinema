@@ -3,11 +3,13 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\models\Comment;
+use common\models\Staff;
 use frontend\assets\AppAsset;
 use frontend\assets\Cinema;
 use frontend\components\ProgressBar;
 use frontend\components\CommentTree;
 use frontend\components\GenreW;
+use frontend\components\FilmStaff;
 
 AppAsset::register($this);
 Cinema::register($this);
@@ -20,8 +22,6 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-echo"<pre>";
-print_r($model->genres);die();
 ?>
 
 
@@ -52,7 +52,16 @@ print_r($model->genres);die();
                         'format' => 'raw',
                         'value' => GenreW::widget(['model'=> $model]),
                     ],
-
+                    [ //Актёр
+                        'label' => 'Актёры',
+                        'format' => 'raw',
+                        'value' => FilmStaff::widget(['model'=> $model, 'professian'=> 1 ])
+                           ],
+                    [ //Режисёр
+                        'label' => 'Режисёр',
+                        'format' => 'raw',
+                        'value' => FilmStaff::widget(['model'=> $model, 'professian'=> 2 ])
+                    ],
 
 
                     [ //Рэйтинг

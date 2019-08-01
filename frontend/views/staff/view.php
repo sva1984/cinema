@@ -40,7 +40,7 @@ Staff::register($this);
             'birth_date',
             'hieght',
             'countryName',
-             ['label' => 'Актёр',
+             ['label' => 'Профессия',
                         'format' => 'raw',
                         'value' => $model->getProfession($model->profession)],
 
