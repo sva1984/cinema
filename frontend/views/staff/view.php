@@ -5,6 +5,9 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use frontend\assets\Staff;
 use frontend\components\CommentTree;
+use frontend\components\StaffGenre;
+use common\models\Film;
+use common\models\Genre;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Staff */
@@ -14,7 +17,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 Staff::register($this);
-
 ?>
 <div class="container">
     <div class="row">
@@ -37,8 +39,17 @@ Staff::register($this);
             'biography:ntext',
             'birth_date',
             'hieght',
-            'profession',
-            'country_id',
+            'countryName',
+             ['label' => 'Актёр',
+                        'format' => 'raw',
+                        'value' => $model->getProfession($model->profession)],
+
+            [//Жанр
+                'label' => 'Жанр',
+                'format' => 'raw',
+                'value' => StaffGenre::widget(['model' => $model]),
+
+            ],
 
         ],
     ]) ?>

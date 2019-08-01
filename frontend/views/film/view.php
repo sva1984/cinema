@@ -20,6 +20,8 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+echo"<pre>";
+print_r($model->genres);die();
 ?>
 
 

@@ -23,6 +23,9 @@ use Yii;
  */
 class Staff extends \yii\db\ActiveRecord
 {
+
+    const Actor = 'Актёр';
+    const Producer = 'Продюсер';
     /**
      * {@inheritdoc}
      */
@@ -90,10 +93,28 @@ class Staff extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return string
+     */
+    public function getCountryName()
+    {//защита если удалят страну из справочника
+        return isset($this->country)?$this->country->country:'Страна на задана';
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getComments()
     {
         return $this->hasMany(Comment::className(), ['staff_id' => 'id']);
+    }
+
+    public function getProfession($profession)
+    {
+        if ($profession == 1) {
+            return self::Actor;
+        }
+        if ($profession == 2) {
+            return self::Producer;
+        }
     }
 }

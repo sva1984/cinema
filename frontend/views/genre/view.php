@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Genre */
 
-$this->title = $model->id;
+$this->title = $model->genre;
 $this->params['breadcrumbs'][] = ['label' => 'Genres', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
