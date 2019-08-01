@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\models\Comment;
+use common\models\Film;
 use frontend\assets\AppAsset;
 use frontend\assets\Cinema;
 use frontend\components\ProgressBar;
-use frontend\components\CommentTree;
 use frontend\components\GenreW;
 
 AppAsset::register($this);
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <h1><?= Html::encode($this->title) ?></h1>
 
-            <?= DetailView::widget([
+           <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
                     'title',
@@ -57,12 +57,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => 'Рейтинг',
                         'format' => 'raw',
                         'value' => ProgressBar::widget(['model' => $model]),
-                    ],
-                    [ //Рэйтинг MPAA
+                     ],
+                    [ //Рэйтинг
                         'label' => 'Рейтинг MPAA',
                         'format' => 'raw',
                         'value' => function($model){
-                            $temp = $model->getMpaa($model->raiting_mpaa);
+                                $temp = $model->getMpaa($model->raiting_mpaa);
                             return Html::img("$temp",[
                                 'alt'=>'MPAA',
                                 'style' => 'width:30px;'
@@ -77,6 +77,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
     </div>
+    <?php function printComment($commentObj, $model, $level)
+    {
+    ?>
+        <li style="margin-left: <?php $margin = 40 * $level;
+        echo "$margin";
+
+        ?>px">
+           <b><?= Html::encode($commentObj->createdBy->username); ?></b>
+
+            <i>| <?= Html::encode($commentObj->getTimeCreate()); ?></i>
+
+            <?= Html::a('Add comment', ['film/filial-comment?id=' . $model->id . '&parrentId=' . $commentObj->id],
+                ['class' => 'btn btn-primary']) ?>
+            <br>
+            <p class="commentText">
+
+                <?= Html::encode($commentObj->comment); ?>
+
+
+            </p>
+            <br>
+            <hr>
+        </li>
+    <?php } ?>
 </div>
 
 
@@ -85,4 +109,43 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $commentModel,
     ]) ?>
 
-<?= CommentTree::widget(['model' => $model]);?>
+<?php
+/** Comments $comment*/
+/**
+ * @param $model
+ * @param $parrentId
+ * @param $level
+ * @return mixed
+ *
+ */
+function tree($model, $parrentId, $level) //рекурсивная функция
+{
+    $level += 1;
+    foreach ($model->comments as $childcomment) {
+
+
+
+        if ($parrentId == $childcomment->parrent_id)
+        {
+
+            printComment($childcomment, $model, $level);
+            $parrentCommentIdChild = $childcomment->id;
+            tree($model, $parrentCommentIdChild, $level);
+        }
+
+    }
+    $level -=1;
+}
+
+foreach ($model->comments as $comment) { ?>
+    <?php if ($comment->parrent_id == null) //определяю родительский комментарий
+    {
+
+        $level = 1;
+        printComment($comment, $model, $level); //печатаю родительский коммент
+        $parrentId = $comment->id;
+        tree($model, $parrentId, $level);
+
+    }
+}
+?>

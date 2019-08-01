@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
 <div class="film-form">
 
-    <?php $form = ActiveForm::begin(['action' => ['film/filial-comment?id=' . $model->id . '&parrentId=' . $parentId]]);
+    <?php $form = ActiveForm::begin(['action' => ['staff/filial-comment?id=' . $model->id . '&parrentId=' . $parentId]]);
 
     ?>
 

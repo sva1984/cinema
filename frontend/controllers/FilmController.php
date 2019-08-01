@@ -74,7 +74,7 @@ class FilmController extends Controller
     public function actionView($id)
     {
         $commentModel = new Comment();
-        $userModel = new User();
+//        $userModel = new User();
         if ($commentModel->load(Yii::$app->request->post())) {
             $commentModel->film_id = $id;
             if (!$commentModel->save())
@@ -83,11 +83,45 @@ class FilmController extends Controller
             }
             Yii::$app->session->setFlash('success', 'comment added');
         }
-
+        $commentModel = new Comment();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'commentModel' => $commentModel,
-            'userModel' => $userModel
+//            'userModel' => $userModel
+
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @param $parrentId
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionFilialComment($id, $parrentId)
+    {
+
+
+        $filialComment = new Comment();
+        $filmModel = $this->findModel($id);
+        if ($filialComment->load(Yii::$app->request->post())) {
+
+
+            $filialComment->film_id = $id;
+            $filialComment->parrent_id = $parrentId;
+            Yii::$app->session->setFlash('success', 'comment added');
+                if (!$filialComment->save()) {
+                die(print_r($filialComment->errors));
+            }
+
+            return $this->redirect(Url::to(['film/view', 'id' => $id]));
+
+        }
+
+        return $this->render('_formparrent', [
+            'filialComment' => $filialComment,
+            'parentId' => $parrentId,
+            'model' => $filmModel,
 
         ]);
     }
@@ -158,35 +192,5 @@ class FilmController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    /**
-     * @param $id
-     * @param $slug
-     * @return string
-     * @throws NotFoundHttpException
-     */
-    public function actionFilialComment($id)
-    {
-        $filialComment = new Comment();
-        $filmModel = new Film();
-        if ($filialComment->load(Yii::$app->request->post())) {
-            $filialComment->film_id = $filmModel->id;
-            $filialComment->parrent_id = $id;
-            Yii::$app->session->setFlash('success', 'comment added');
-            if (!$filialComment->save()) {
-                die(print_r($filialComment->errors));
-            }
-
-            return $this->redirect(Url::to(['film/view', 'id' => $id]));
-
-        }
-
-        return $this->render('_formparrent', [
-            'filialComment' => $filialComment,
-            'parentCommentId' => $id,
-            'model' => $filmModel,
-
-        ]);
     }
 }

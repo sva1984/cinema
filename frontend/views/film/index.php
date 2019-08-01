@@ -1,16 +1,18 @@
 <?php
 
 use frontend\components\ProgressBar;
+use frontend\assets\Cinema;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\film;
 use common\models\country;
 use common\models\filmGenre;
+use frontend\components\GenreW;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\FilmSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+Cinema::register($this);
 $this->title = ' C I N E M A ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -65,25 +67,19 @@ $this->params['breadcrumbs'][] = $this->title;
             [//Жанр
                 'label' => 'Жанр',
                 'format' => 'raw',
-                'value' => function(Film $data){
-                    $strGenre='';
-                     foreach($data->genres as $genre)
-                    {
-                        $strGenre .= Html::a(
-                            $genre->genre,
-                            "view?id=$genre->id").', ';
-
-                    //$strGenre .= $genre->genre.', ';
-                    };
-                    return $strGenre;
+                'value' =>
+                    function(Film $data){
+                return GenreW::widget(['model'=> $data]);
                 }
             ],
-            'raiting',
-//            [ //Рэйтинг
-//                'label' => 'Рейтинг',
-//                'format' => 'raw',
-//                'value' =>  ProgressBar::widget(['model' => $data]),
-//            ],
+            [ //Рэйтинг
+                'label' => 'Рейтинг',
+                'format' => 'raw',
+                'value' =>function(Film $data) {
+
+                    return ProgressBar::widget(['model' => $data]);
+                }
+            ],
 
 //            ['class' => 'yii\grid\ActionColumn'],
         ],

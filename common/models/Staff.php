@@ -16,6 +16,7 @@ use Yii;
  * @property int $country_id
  * @property string $img_url
  *
+ * @property Comment[] $comments
  * @property FilmStaff[] $filmStaff
  * @property Film[] $films
  * @property Country $country
@@ -86,5 +87,13 @@ class Staff extends \yii\db\ActiveRecord
     public function getCountry()
     {
         return $this->hasOne(Country::className(), ['id' => 'country_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['staff_id' => 'id']);
     }
 }

@@ -6,18 +6,21 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 
+
 /**
  * This is the model class for table "comment".
  *
  * @property int $id
  * @property string $comment
  * @property int $film_id
+ * @property int $staff_id
  * @property int $created_by
  * @property int $updated_by
  * @property int $created_at
  * @property int $updated_at
  * @property int $parrent_id
  *
+ * @property Staff $staff
  * @property User $createdBy
  * @property Film $film
  * @property Comment $parrent
@@ -42,7 +45,8 @@ class Comment extends \yii\db\ActiveRecord
         return [
             [['comment'], 'required'],
             [['comment'], 'string'],
-            [['film_id', 'created_by', 'updated_by', 'created_at', 'updated_at', 'parrent_id'], 'integer'],
+            [['film_id', 'staff_id', 'created_by', 'updated_by', 'created_at', 'updated_at', 'parrent_id'], 'integer'],
+            [['staff_id'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['staff_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['film_id'], 'exist', 'skipOnError' => true, 'targetClass' => Film::className(), 'targetAttribute' => ['film_id' => 'id']],
             [['parrent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comment::className(), 'targetAttribute' => ['parrent_id' => 'id']],
@@ -59,12 +63,21 @@ class Comment extends \yii\db\ActiveRecord
             'id' => 'ID',
             'comment' => 'Comment',
             'film_id' => 'Film ID',
+            'staff_id' => 'Staff ID',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'parrent_id' => 'Parrent ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaff()
+    {
+        return $this->hasOne(Staff::className(), ['id' => 'staff_id']);
     }
 
     /**

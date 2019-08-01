@@ -37,6 +37,11 @@ use yii\behaviors\TimestampBehavior;
  */
 class Film extends \yii\db\ActiveRecord
 {
+    const TypeR = 'https://st.kp.yandex.net/images/mpaa/R.gif';
+    const TypeG = 'https://st.kp.yandex.net/images/mpaa/G.gif';
+    const TypePg = 'https://st.kp.yandex.net/images/mpaa/PG.gif';
+    const TypePgd ='https://st.kp.yandex.net/images/mpaa/PG-13.gif';
+    const TypeNc = 'https://st.kp.yandex.net/images/mpaa/NC-17.gif';
     /**
      * {@inheritdoc}
      */
@@ -194,5 +199,24 @@ class Film extends \yii\db\ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('film_user', ['film_id' => 'id']);
+    }
+
+    public function getMpaa($mpaaId)
+    {
+        if ($mpaaId == 1) {
+            return self::TypeR;
+        }
+        if ($mpaaId == 2) {
+            return self::TypeG;
+        }
+        if ($mpaaId == 3) {
+            return self::TypePg;
+        }
+        if ($mpaaId == 4) {
+            return self::TypePgd;
+        }
+        if ($mpaaId == 5) {
+            return self::TypeNc;
+        }
     }
 }

@@ -1,20 +1,18 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\Staff;
-use common\models\StaffSearch;
+use common\models\Genre;
+use common\models\GenreSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\Comment;
-use yii\helpers\Url;
 
 /**
- * StaffController implements the CRUD actions for Staff model.
+ * GenreController implements the CRUD actions for Genre model.
  */
-class StaffController extends Controller
+class GenreController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +30,12 @@ class StaffController extends Controller
     }
 
     /**
-     * Lists all Staff models.
+     * Lists all Genre models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StaffSearch();
+        $searchModel = new GenreSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,72 +45,26 @@ class StaffController extends Controller
     }
 
     /**
-     * @param $id
-     * @return string
-     * @throws NotFoundHttpException
+     * Displays a single Genre model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-
-        $commentModel = new Comment();
-        if ($commentModel->load(Yii::$app->request->post())) {
-            $commentModel->staff_id = $id;
-            if (!$commentModel->save())
-            {
-                die(print_r($commentModel->errors));
-            }
-            Yii::$app->session->setFlash('success', 'comment added');
-        }
-        $commentModel = new Comment();
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'commentModel' => $commentModel,
         ]);
     }
 
     /**
-     * @param $id
-     * @param $parrentId
-     * @return string
-     * @throws NotFoundHttpException
-     */
-    public function actionFilialComment($id, $parrentId)
-    {
-
-
-        $filialComment = new Comment();
-        $filmModel = $this->findModel($id);
-        if ($filialComment->load(Yii::$app->request->post())) {
-
-
-            $filialComment->staff_id = $id;
-            $filialComment->parrent_id = $parrentId;
-            Yii::$app->session->setFlash('success', 'comment added');
-            if (!$filialComment->save()) {
-                die(print_r($filialComment->errors));
-            }
-
-            return $this->redirect(Url::to(['staff/view', 'id' => $id]));
-
-        }
-
-        return $this->render('_formparrent', [
-            'filialComment' => $filialComment,
-            'parentId' => $parrentId,
-            'model' => $filmModel,
-
-        ]);
-    }
-
-
-    /**
-     * Creates a new Staff model.
+     * Creates a new Genre model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Staff();
+        $model = new Genre();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -124,7 +76,7 @@ class StaffController extends Controller
     }
 
     /**
-     * Updates an existing Staff model.
+     * Updates an existing Genre model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -144,7 +96,7 @@ class StaffController extends Controller
     }
 
     /**
-     * Deletes an existing Staff model.
+     * Deletes an existing Genre model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -158,15 +110,15 @@ class StaffController extends Controller
     }
 
     /**
-     * Finds the Staff model based on its primary key value.
+     * Finds the Genre model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Staff the loaded model
+     * @return Genre the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Staff::findOne($id)) !== null) {
+        if (($model = Genre::findOne($id)) !== null) {
             return $model;
         }
 

@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use frontend\assets\Staff;
+use frontend\components\CommentTree;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Staff */
@@ -28,31 +29,27 @@ Staff::register($this);
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
+        <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-//            'id',
+
             'name',
             'biography:ntext',
             'birth_date',
             'hieght',
             'profession',
             'country_id',
-//            'img_url:url',
+
         ],
     ]) ?>
 
 </div>
     </div>
 </div>
+
+<?=
+$this->render('_form', [
+    'model' => $commentModel,
+]) ?>
+
+<?= CommentTree::widget(['model' => $model]);?>

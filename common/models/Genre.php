@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $genre
+ * @property string $about
  *
  * @property FilmGenre[] $filmGenres
  * @property Film[] $films
@@ -30,6 +31,7 @@ class Genre extends \yii\db\ActiveRecord
     {
         return [
             [['genre'], 'required'],
+            [['about'], 'string'],
             [['genre'], 'string', 'max' => 64],
         ];
     }
@@ -42,6 +44,7 @@ class Genre extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'genre' => 'Genre',
+            'about' => 'About',
         ];
     }
 
