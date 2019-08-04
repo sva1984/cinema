@@ -3,37 +3,42 @@
 namespace frontend\controllers;
 
 use common\models\Comment;
-use common\models\User;
-use common\services\ArticalsService;
-use common\services\CommentService;
-use common\services\UserService;
-use frontend\services\FilmConrolService;
+
+use common\repositories\FilmRepository;
+use common\services\FilmServices;
 use Yii;
 use common\models\Film;
 use common\models\FilmSearch;
 use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use frontend\service\FilmControlService;
+
+//use frontend\service\FilmControlService;
 
 /**
  * FilmController implements the CRUD actions for Film model.
  */
 class FilmController extends Controller
 {
+    /** @var FilmRepository */
+    private $filmRepository;
 
-//    protected $filmContlolService;
-//
-//    public function __construct($id, $module,
-//                               FilmConrolService $filmContlolService, $config = [])
-//    {
-//        parent::__construct($id, $module, $config);
-//        $this->filmContlolService = $filmContlolService;
-//    }
+    /** @var FilmServices */
+    private $filmServices;
 
-
-
+    public function __construct
+    (
+        $id, $module,
+        FilmRepository $filmRepository,
+        FilmServices $filmServices,
+        array $config = []
+    ) {
+        parent::__construct($id, $module, $config);
+        $this->filmRepository = $filmRepository;
+        $this->filmServices = $filmServices;
+    }
 
     /**
      * {@inheritdoc}
@@ -74,21 +79,16 @@ class FilmController extends Controller
     public function actionView($id)
     {
         $commentModel = new Comment();
-//        $userModel = new User();
-        if ($commentModel->load(Yii::$app->request->post())) {
-            $commentModel->film_id = $id;
-            if (!$commentModel->save())
-            {
-                die(print_r($commentModel->errors));
-            }
+        if ($commentModel->load(Yii::$app->request->post()))
+        {
+            $this->filmServices->createAndSaveByModelAndParam($commentModel, $id);
             Yii::$app->session->setFlash('success', 'comment added');
         }
         $commentModel = new Comment();
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'commentModel' => $commentModel,
-//            'userModel' => $userModel
 
+        return $this->render('view', [
+            'model' => $this->filmRepository->getById($id),
+            'commentModel' => $commentModel,
         ]);
     }
 
@@ -100,29 +100,18 @@ class FilmController extends Controller
      */
     public function actionFilialComment($id, $parrentId)
     {
-
-
         $filialComment = new Comment();
-        $filmModel = $this->findModel($id);
-        if ($filialComment->load(Yii::$app->request->post())) {
-
-
-            $filialComment->film_id = $id;
-            $filialComment->parrent_id = $parrentId;
+        if ($filialComment->load(Yii::$app->request->post()))
+        {
+            $this->filmServices->createAndSaveByModelAndParam($filialComment, $id, $parrentId);
             Yii::$app->session->setFlash('success', 'comment added');
-                if (!$filialComment->save()) {
-                die(print_r($filialComment->errors));
-            }
-
             return $this->redirect(Url::to(['film/view', 'id' => $id]));
-
         }
 
         return $this->render('_formparrent', [
             'filialComment' => $filialComment,
             'parentId' => $parrentId,
-            'model' => $filmModel,
-
+            'model' => $this->filmRepository->getById($id),
         ]);
     }
 
@@ -153,7 +142,7 @@ class FilmController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->filmRepository->getById($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -167,30 +156,21 @@ class FilmController extends Controller
     /**
      * Deletes an existing Film model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     *
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->filmRepository->getById($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Film model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Film the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Film::findOne($id)) !== null) {
-            return $model;
-        }
+   
 
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
+
 }

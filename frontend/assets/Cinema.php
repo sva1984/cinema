@@ -12,7 +12,7 @@ class Cinema extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/my.css',
+        'css/cinema.css',
      ];
     public $js = [
     ];

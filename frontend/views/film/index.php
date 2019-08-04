@@ -23,7 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
+    <?=
+//    die(print_r($data));
+
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             [//Промо
@@ -45,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'options' => ['style' => 'width: 15%; max-width: 65px;'],
                 'value' => function(Film $data){
-                    return Html::a(
+                        return Html::a(
                         $data->title,
                         "view?id=$data->id",
 

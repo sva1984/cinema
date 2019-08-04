@@ -71,7 +71,8 @@ class CommentTree extends Widget
             $printResult .= "<i> " . Html::encode($commentObj->getTimeCreate()) . "</i> ";
         $printResult .= Html::a("Add comment",
                 ["$url/filial-comment?id=" . $model->id . "&parrentId=" . $commentObj->id],
-                ["class" => "btn btn-primary"]) . '<br><p class="commentText">' . Html::encode($commentObj->comment) . '</p><br><hr></li>';
+                ["class" => "btn btn-primary"]) .
+            '<br><p class="commentText">' . Html::encode($commentObj->comment) . '</p><br><hr></li>';//Защита от XSS уязвимости
 
         return $printResult;
     }
