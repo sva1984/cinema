@@ -16,6 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'film_id')->textInput() ?>
 
+    <?= $form->field($model, 'staff_id')->textInput() ?>
+
     <?= $form->field($model, 'created_by')->textInput() ?>
 
     <?= $form->field($model, 'updated_by')->textInput() ?>

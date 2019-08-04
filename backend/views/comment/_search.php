@@ -21,9 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'film_id') ?>
 
+    <?= $form->field($model, 'staff_id') ?>
+
     <?= $form->field($model, 'created_by') ?>
 
-    <?= $form->field($model, 'updated_by') ?>
+    <?php // echo $form->field($model, 'updated_by') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

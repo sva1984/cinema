@@ -14,23 +14,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Genre', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [//ссылка на название
+                'label' => 'Жанры',
+                'format' => 'raw',
+//                'options' => ['style' => 'width: 15%; max-width: 65px;'],
+                'value' => function(\common\models\Genre $data){
+                    return Html::a(
+                        $data->genre,
+                        "view?id=$data->id",
 
-            'id',
-            'genre',
-            'about:ntext',
+                        [ //открытие ссылки в новом окне
+                            'title' =>  $data->genre,
+                            'target' => '_blank'
+                        ]
+                    );
+                }
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+
         ],
     ]); ?>
 

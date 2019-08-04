@@ -22,18 +22,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name',
-            'biography:ntext',
+//            'id',
+//            'name',
+ [//ссылка на название
+                'label' => 'Ф.И.О.',
+                'format' => 'raw',
+//                'options' => ['style' => 'width: 15%; max-width: 65px;'],
+                'value' => function(\common\models\Staff $data){
+                    return Html::a(
+                        $data->name,
+                        "view?id=$data->id",
+
+                        [ //открытие ссылки в новом окне
+                            'title' =>  $data->name,
+                            'target' => '_blank'
+                        ]
+                    );
+                }],
             'birth_date',
             'hieght',
-            //'profession',
-            //'country_id',
-            //'img_url:url',
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

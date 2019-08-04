@@ -1,22 +1,24 @@
 <?php
 namespace common\repositories;
 
-use common\models\Comment;
+
+use common\models\Staff;
 use yii\web\NotFoundHttpException;
 
 
-class CommentRepository
+class StaffRepository
 {
-    private $comment;
 
-    public function __construct(Comment $comment)
+    private $staff;
+
+    public function __construct(Staff $staff)
     {
-        $this->comment = $comment;
+        $this->staff = $staff;
     }
 
     private function findById($id)
     {
-        return Comment::findOne($id);
+        return Staff::findOne($id);
     }
 
     /**
@@ -24,7 +26,7 @@ class CommentRepository
      * @return Film
      * @throws NotFoundHttpException
      */
-    public function getById($id) : Comment
+    public function getById($id) : Staff
     {
         if (($model = $this->findById($id)) !== null) {
             return $model;

@@ -1,22 +1,23 @@
 <?php
 namespace common\repositories;
 
-use common\models\Comment;
+
+use common\models\Genre;
 use yii\web\NotFoundHttpException;
 
 
-class CommentRepository
+class GenreRepository
 {
-    private $comment;
+    private $genre;
 
-    public function __construct(Comment $comment)
+    public function __construct(Genre $genre)
     {
-        $this->comment = $comment;
+        $this->genre = $genre;
     }
 
     private function findById($id)
     {
-        return Comment::findOne($id);
+        return Genre::findOne($id);
     }
 
     /**
@@ -24,7 +25,7 @@ class CommentRepository
      * @return Film
      * @throws NotFoundHttpException
      */
-    public function getById($id) : Comment
+    public function getById($id) : Genre
     {
         if (($model = $this->findById($id)) !== null) {
             return $model;

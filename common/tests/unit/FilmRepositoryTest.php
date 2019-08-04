@@ -1,7 +1,7 @@
 <?php
 namespace common\tests\unit\models;
 
-use common\repositories\FilmRepository;
+use common\repositories\StaffRepository;
 use Yii;
 use common\models\LoginForm;
 use common\fixtures\UserFixture;
@@ -14,12 +14,12 @@ class FilmRepositoryTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    /** @var FilmRepository */
+    /** @var StaffRepository */
     private $filmRepository;
 
     public function __construct(
         string $name = null, array $data = [], string $dataName = '',
-        FilmRepository $filmRepository
+        StaffRepository $filmRepository
     ) {
         parent::__construct($name, $data, $dataName);
         $this->filmRepository = $filmRepository;

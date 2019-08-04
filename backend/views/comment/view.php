@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'comment:ntext',
             'film_id',
+            'staff_id',
             'created_by',
             'updated_by',
             'created_at',
