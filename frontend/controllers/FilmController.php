@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Comment;
 
-use common\repositories\StaffRepository;
+use common\repositories\FilmRepository;
 use common\services\FilmServices;
 use Yii;
 use common\models\Film;
@@ -31,7 +31,7 @@ class FilmController extends Controller
     public function __construct
     (
         $id, $module,
-        StaffRepository $filmRepository,
+        FilmRepository $filmRepository,
         FilmServices $filmServices,
         array $config = []
     ) {

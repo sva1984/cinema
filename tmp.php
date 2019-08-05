@@ -22,3 +22,10 @@ $y = 10;
 echo 'x='.$x.'y='.$y.PHP_EOL;
 list($x, $y) = [$y, $x];
 echo 'x='.$x.'y='.$y.PHP_EOL;
+
+
+$numbers = [ '1' , '2', '3' ] ;
+for ($i = 0; $i < count($numbers); $i++)
+{
+    echo $numbers[$i].PHP_EOL;
+}

@@ -23,6 +23,7 @@ Cinema::register($this);
 
 /* @var $commentModel common\models\Comment */
 
+//unbug($model);
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Films', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

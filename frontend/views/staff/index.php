@@ -14,10 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Staff', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -26,8 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-//            'id',
-//            'name',
+
  [//ссылка на название
                 'label' => 'Ф.И.О.',
                 'format' => 'raw',
@@ -47,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'hieght',
 
 
-            ['class' => 'yii\grid\ActionColumn'],
+
         ],
     ]); ?>
 

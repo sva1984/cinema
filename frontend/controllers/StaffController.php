@@ -74,8 +74,8 @@ class StaffController extends Controller
      */
     public function actionView($id)
     {
-
         $commentModel = new Comment();
+//        d($commentModel);die();
         if ($commentModel->load(Yii::$app->request->post())) {
             $this->staffServices->createAndSaveByModelAndParam($commentModel, $id);
             Yii::$app->session->setFlash('success', 'comment added');
@@ -95,8 +95,6 @@ class StaffController extends Controller
      */
     public function actionFilialComment($id, $parrentId)
     {
-
-
         $filialComment = new Comment();
         $filmModel = $this->staffRepository->getById($id);
         if ($filialComment->load(Yii::$app->request->post())) {

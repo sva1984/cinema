@@ -6,6 +6,8 @@ use yii\widgets\DetailView;
 use frontend\assets\Staff;
 use frontend\components\CommentTree;
 use frontend\components\StaffGenre;
+use frontend\components\StaffFilm;
+use frontend\components\CountFilmStaff;
 use common\models\Film;
 use common\models\Genre;
 
@@ -43,6 +45,16 @@ Staff::register($this);
              ['label' => 'Профессия',
                         'format' => 'raw',
                         'value' => $model->getProfession($model->profession)],
+
+            ['label' => 'Фильмы',
+                'format' => 'raw',
+                'value' => StaffFilm::widget(['model' => $model]),
+                ],
+
+            ['label' => 'Кол-во Фильмов',
+                'format' => 'raw',
+                'value' => CountFilmStaff::widget(['model' => $model]),
+            ],
 
             [//Жанр
                 'label' => 'Жанр',
