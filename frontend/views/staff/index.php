@@ -40,9 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             'birth_date',
             'hieght',
-
-
-
+            
         ],
     ]); ?>
 

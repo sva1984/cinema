@@ -23,8 +23,9 @@ class FilmServices
         $filialComment->film_id = $id;
         $filialComment->parrent_id = $parentId;
 
-        if (!$filialComment->save()) {
-            throw new InvalidArgumentException($filialComment->errors);
+        if (!$filialComment->save())
+        {
+//            throw new InvalidArgumentException($filialComment->errors);
         }
         return $filialComment;
     }

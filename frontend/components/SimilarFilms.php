@@ -13,27 +13,28 @@ class SimilarFilms extends Widget
 
     public function run()
     {
-        $oneFilmGenres=[];
-        $tmp=[];
         $result = '';
+
         foreach ($this->model->genres as $genre)
-            $oneFilmGenresUpdate = array_shift($oneFilmGenres);
         {
-            $oneFilmGenres[]=$genre->id;
+            $oneFilmGenres[] = $genre->id;
         }
-        $allGenres = FilmGenre::find()->where(['genre_id' => $oneFilmGenres])->all();//MTM все фильмы и жанры
+
+        $allGenres = FilmGenre::find()->where(['genre_id' => $oneFilmGenres])->all();
         foreach ($allGenres as $genre)
-            $tmp[]=$genre['film_id'];
-
-
-
-        foreach ($tmp as $t)
-            if($t != $this->model->id)
-            $result .= "<a href='view?id=".$t."'><img src='". Film::findOne($t)->img_url . "' width='150' 
-   height='150' margin-right='10'></a>";
-
-            return $result;
+        {
+            $arrayGenres []= $genre['film_id'];
         }
+
+        $arrayGenres = array_unique($arrayGenres);
+        foreach ($arrayGenres as $key => $value) {
+            if ( $value != $this->model->id) {
+                $result .= "<a href='view?id=" . $value . "'><img src='" . Film::findOne($value)->img_url . "' width='150' 
+   height='150' margin-right='10'></a>";
+            }
+        }
+        return $result;
+    }
 
 
 }
