@@ -1,6 +1,6 @@
 <?php
 return [
-    'film1' =>  [
+    'comment1' =>  [
         'title' => '1+1',
         'description' => 'very good film',
         'duration' => '120',

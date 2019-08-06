@@ -28,7 +28,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'username' => 'some_username',
             'email' => 'some_email@example.com',
             'password' => 'some_password',
-        ]);
+            ]);
 
         $user = $model->signup();
         expect($user)->true();
@@ -37,13 +37,12 @@ class SignupFormTest extends \Codeception\Test\Unit
         $user = $this->tester->grabRecord('common\models\User', [
             'username' => 'some_username',
             'email' => 'some_email@example.com',
-            'status' => \common\models\User::STATUS_INACTIVE
+            'status' => \common\models\User::STATUS_ACTIVE,
         ]);
 
         $this->tester->seeEmailIsSent();
 
         $mail = $this->tester->grabLastSentEmail();
-
         expect($mail)->isInstanceOf('yii\mail\MessageInterface');
         expect($mail->getTo())->hasKey('some_email@example.com');
         expect($mail->getFrom())->hasKey(\Yii::$app->params['supportEmail']);

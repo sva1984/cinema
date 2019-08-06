@@ -29,3 +29,11 @@ for ($i = 0; $i < count($numbers); $i++)
 {
     echo $numbers[$i].PHP_EOL;
 }
+$arr = [ 'fst', 'snd', 'thd' , 'fth' ];
+$arr2 = array_rand($arr,1);
+echo $arr[$arr2];
+
+$arr3 = ['fst' => 1, 'snd' => 2, 'thd' => з, 'fth' => 4];
+    foreach($arr3 as $key => $a)
+        $arr4[]=$key;
+    print_r($arr4);
